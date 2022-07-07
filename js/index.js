@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
   // Basic ideas from https://code-boxx.com/simple-javascript-quiz/
   //timer
-  let countDown = 60;
+  let countDown = 20;
   const myInterval = setInterval(myTimer, 1000);
   let score = 0;
 
@@ -101,7 +101,11 @@ window.addEventListener('DOMContentLoaded', () => {
             score++;
 
           }
+        }   else {
+          if (radioElement.checked) {
+          $("#li_" + index + "_" + i).css("background-color", "red");
         }
+      }
 
       }
     });
