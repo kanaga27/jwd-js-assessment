@@ -18,17 +18,17 @@
   </head>
   <body>
     <div class="container m-5" id="start">
-      <div class="card" style="width: 18rem">
+      <div class="card text-white bg-info mb-3 text-center " style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Test your knowledge</h5>
-          <p class="card-text">Some quick description about the quiz .</p>
+          <h5 class="card-title">JS Assessment</h5>
+          <p class="card-text">Welcome to the Quiz .</p>
           <a class="btn btn-primary">Start</a>
         </div>
       </div>
     </div>
 
     <!-- (B) QUIZ CONTAINER -->
-    <div class="container" id="quizBlock" style="display: none">
+    <div class="container" id="quizBlock" style="display: none; background-color: rgb(215, 239, 231);">
       <div class="mb-5">
         <h2>Test your knowledge</h2>
         - Time remaining <span id="time">01:00</span>
@@ -36,7 +36,7 @@
       <div id="quizWrap"></div>
 
       <div>
-        <button type="button" class="btn btn-primary" id="btnSubmit">
+        <button type="button" class="btn btn-primary" onclick="showResult" id="btnSubmit">
           Submit Quiz
         </button>
         <button type="button" class="btn btn-primary" id="btnReset">

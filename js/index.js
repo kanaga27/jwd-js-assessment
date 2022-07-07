@@ -19,6 +19,8 @@
       5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
 *************************** */
 
+
+
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
   start.addEventListener('click', function (e) {
@@ -28,6 +30,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // quizArray QUESTIONS & ANSWERS
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
   // Basic ideas from https://code-boxx.com/simple-javascript-quiz/
+  //timer
+  let countDown = 60;
+  const myInterval = setInterval(myTimer, 1000);
+  let score = 0;
+
   const quizArray = [
     {
       q: 'Which is the third planet from the sun?',
@@ -37,13 +44,23 @@ window.addEventListener('DOMContentLoaded', () => {
     {
       q: 'Which is the largest ocean on Earth?',
       o: ['Atlantic Ocean', 'Indian Ocean', 'Arctic Ocean', 'Pacific Ocean'],
-      a: 3,
+      a: 3,//answer is Pacific Ocean
     },
     {
       q: 'What is the capital of Australia',
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
-      a: 1,
+      a: 1,//Canberra
     },
+    {
+      q: 'Choose the correct HTML element for the largest heading:',
+      o: ['head', 'heading', 'h6', 'h1'],
+      a: 3,//h1
+    },
+    {
+      q: 'Which is the correct CSS syntax?',
+      o: ['body:color=black;', 'body {color:black;}', '{body:color=black;}', '{body;color:black;}'],
+      a: 1, //'body {color:black;}'
+    }
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -52,7 +69,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let quizDisplay = '';
     quizArray.map((quizItem, index) => {
       quizDisplay += `<ul class="list-group">
-                   Q - ${quizItem.q}
+                  <h3> Q - ${quizItem.q}</h3>
                     <li class="list-group-item mt-2" id="li_${index}_0"><input type="radio" name="radio${index}" id="radio_${index}_0"> ${quizItem.o[0]}</li>
                     <li class="list-group-item" id="li_${index}_1"><input type="radio" name="radio${index}" id="radio_${index}_1"> ${quizItem.o[1]}</li>
                     <li class="list-group-item"  id="li_${index}_2"><input type="radio" name="radio${index}" id="radio_${index}_2"> ${quizItem.o[2]}</li>
@@ -65,26 +82,66 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // Calculate the score
   const calculateScore = () => {
-    let score = 0;
+   // alert("Calculate function called");
+     score = 0;
     quizArray.map((quizItem, index) => {
+
       for (let i = 0; i < 4; i++) {
         //highlight the li if it is the correct answer
         let li = `li_${index}_${i}`;
         let r = `radio_${index}_${i}`;
         liElement = document.querySelector('#' + li);
         radioElement = document.querySelector('#' + r);
-
+        //alert ("li =" +li);
         if (quizItem.a == i) {
           //change background color of li element here
+          $("#li_" + index + "_" + i).css("background-color", "lightgreen");
+          if (radioElement.checked) {
+            // code for task 1 goes here
+            score++;
+
+          }
         }
 
-        if (radioElement.checked) {
-          // code for task 1 goes here
-        }
       }
     });
+    return score;
+    
   };
+  //submit buuton
+  let submitButton = document.querySelector('#btnSubmit');
+  submitButton.addEventListener("click", showResult);
+  function showResult() {
+    stopTimer();
+    calculateScore();
+    //alert("Your Score is: " + score);
+    $("#score").text("Your Score is: " + score);
+  }
 
+
+  //Timer setting
+  function myTimer() {
+    countDown--;
+    $("#time").text(countDown +"s");
+    if (countDown === 0) {
+      stopTimer();
+    }
+
+  }
+  function stopTimer() {
+    clearInterval(myInterval);
+    //alert("Timer is stopped");
+    calculateScore();
+  }
+
+  //reset buuton
+  let btnReset = document.querySelector('#btnReset');
+  btnReset.addEventListener("click", resetBtn);
+  function resetBtn() {
+    //alert ("reset btn called");
+    location.reload();
+
+  }
   // call the displayQuiz function
   displayQuiz();
 });
